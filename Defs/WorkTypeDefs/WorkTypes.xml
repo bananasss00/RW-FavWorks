@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<WorkTypeDef>
+		<defName>FavPriority1</defName>
+		<labelShort>FavWork</labelShort>
+		<pawnLabel>FavPriorityPawn</pawnLabel>
+		<gerundLabel>FavWork</gerundLabel>
+		<description>DESCRIPTION</description>
+		<verb>FavPriorityVerb</verb>
+		<naturalPriority>0</naturalPriority>
+		<alwaysStartActive>true</alwaysStartActive>
+		<workTags>
+			<!-- <li>ManualDumb</li> -->
+			<!-- <li>Hauling</li> -->
+		</workTags>
+	</WorkTypeDef>
+
+	<WorkTypeDef>
+		<defName>FavPriority2</defName>
+		<labelShort>FavWork</labelShort>
+		<pawnLabel>FavPriorityPawn</pawnLabel>
+		<gerundLabel>FavWork</gerundLabel>
+		<description>DESCRIPTION</description>
+		<verb>FavPriorityVerb</verb>
+		<naturalPriority>0</naturalPriority>
+		<alwaysStartActive>true</alwaysStartActive>
+		<visible>false</visible>
+		<workTags>
+			<!-- <li>ManualDumb</li> -->
+			<!-- <li>Hauling</li> -->
+		</workTags>
+	</WorkTypeDef>
+
+	<WorkTypeDef>
+		<defName>FavPriority3</defName>
+		<labelShort>FavWork</labelShort>
+		<pawnLabel>FavPriorityPawn</pawnLabel>
+		<gerundLabel>FavWork</gerundLabel>
+		<description>DESCRIPTION</description>
+		<verb>FavPriorityVerb</verb>
+		<naturalPriority>0</naturalPriority>
+		<alwaysStartActive>true</alwaysStartActive>
+		<visible>false</visible>
+		<workTags>
+			<!-- <li>ManualDumb</li> -->
+			<!-- <li>Hauling</li> -->
+		</workTags>
+	</WorkTypeDef>
+
+	<WorkTypeDef>
+		<defName>FavPriority4</defName>
+		<labelShort>FavWork</labelShort>
+		<pawnLabel>FavPriorityPawn</pawnLabel>
+		<gerundLabel>FavWork</gerundLabel>
+		<description>DESCRIPTION</description>
+		<verb>FavPriorityVerb</verb>
+		<naturalPriority>0</naturalPriority>
+		<alwaysStartActive>true</alwaysStartActive>
+		<visible>false</visible>
+		<workTags>
+			<!-- <li>ManualDumb</li> -->
+			<!-- <li>Hauling</li> -->
+		</workTags>
+	</WorkTypeDef>
+
+	<WorkTypeDef>
+		<defName>FavPriority5</defName>
+		<labelShort>FavWork</labelShort>
+		<pawnLabel>FavPriorityPawn</pawnLabel>
+		<gerundLabel>FavWork</gerundLabel>
+		<description>DESCRIPTION</description>
+		<verb>FavPriorityVerb</verb>
+		<naturalPriority>0</naturalPriority>
+		<alwaysStartActive>true</alwaysStartActive>
+		<visible>false</visible>
+		<workTags>
+			<!-- <li>ManualDumb</li> -->
+			<!-- <li>Hauling</li> -->
+		</workTags>
+	</WorkTypeDef>
+
+</Defs>
