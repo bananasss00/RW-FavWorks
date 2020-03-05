@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Harmony;
-using RimWorld;
 using UnityEngine;
 using Verse;
-using WorkTab;
 
-namespace FavPriorities
+namespace FavWorks
 {
     public class Window : Verse.Window
     {
@@ -31,7 +27,7 @@ namespace FavPriorities
         {
             foreach (var favWorkType in Manager.Instance.GetAllFavWorkTypes())
             {
-                yield return new FloatMenuOption(favWorkType.WorkTypeName, () => _currentFavWork = favWorkType.workTypeDef);
+                yield return new FloatMenuOption(favWorkType.WorkTypeName, () => _currentFavWork = favWorkType.WorkTypeDef);
             }
         }
         

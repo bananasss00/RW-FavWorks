@@ -7,7 +7,7 @@ using RimWorld;
 using Verse;
 using WorkTab;
 
-namespace FavPriorities
+namespace FavWorks
 {
     [DefOf]
     public static class FavPrioritiesDefOf
@@ -27,7 +27,7 @@ namespace FavPriorities
 
             if (_favWorkTypeDefs.Count == 0)
             {
-                Log.Error("[FavPriorities] Can't find any FavWork WorkTypeDef's");
+                Log.Error("[FavWorks] Can't find any FavWork WorkTypeDef's");
             }
         }
 
@@ -57,13 +57,13 @@ namespace FavPriorities
 
                 foreach (var favWorkTypeDef in _favWorkTypeDefs.Values)
                 {
-                    if (favWorkTypeDef.workTypeDef == null)
+                    if (favWorkTypeDef.WorkTypeDef == null)
                         throw new Exception("workTypeDef was null");
                 }
 
                 if (Scribe.mode == LoadSaveMode.PostLoadInit)
                 {
-                    _favWorkTypeDefs = _favWorkTypeDefs.ToDictionary(x => x.Value.workTypeDef.defName, y => y.Value);
+                    _favWorkTypeDefs = _favWorkTypeDefs.ToDictionary(x => x.Value.WorkTypeDef.defName, y => y.Value);
                 }
             }
             catch (Exception e)
@@ -72,7 +72,7 @@ namespace FavPriorities
                     .Where(x => x.IsFavWorkDef())
                     .ToDictionary(x => x.defName, y => new FavWorkType(y));
 
-                Log.Error($"[FavPriorities] Exception when loading data: {e.Message}");
+                Log.Error($"[FavWorks] Exception when loading data: {e.Message}");
             }
 
             this.ApplyWorks();
@@ -109,7 +109,7 @@ namespace FavPriorities
 
             foreach (var favWorkCfg in _favWorkTypeDefs.Values)
             {
-                favWorkCfg.ApplyChanges(workgiversByType, WorkTab.Controller.allColumns);
+                favWorkCfg.InsertNewWork(workgiversByType, WorkTab.Controller.allColumns);
             }
 
             // update pawns work settings

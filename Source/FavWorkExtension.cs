@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Harmony;
 using RimWorld;
 using Verse;
 using WorkTab;
 
-namespace FavPriorities
+namespace FavWorks
 {
     public static class FavWorkExtension
     {
@@ -24,7 +22,7 @@ namespace FavPriorities
         {
             if (!def.IsFavWorkDef())
             {
-                Log.Error($"[FavPriorities] This not FavWorkTypeDef!");
+                Log.Error($"[FavWorks] This is not FavWorkTypeDef!");
                 return null;
             }
 

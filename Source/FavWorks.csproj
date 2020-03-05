@@ -7,8 +7,8 @@
     <ProjectGuid>{AD72E897-5B18-4570-9A3B-898D9AB398CC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FavPriorities</RootNamespace>
-    <AssemblyName>FavPriorities</AssemblyName>
+    <RootNamespace>FavWorks</RootNamespace>
+    <AssemblyName>FavWorks</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

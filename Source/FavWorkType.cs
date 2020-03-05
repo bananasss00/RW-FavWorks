@@ -6,7 +6,7 @@ using RimWorld;
 using Verse;
 using WorkTab;
 
-namespace FavPriorities
+namespace FavWorks
 {
     /// <summary>
     /// Reset tooltips patch
@@ -18,10 +18,10 @@ namespace FavPriorities
         public static void GetHeaderTip(PawnColumnWorker_WorkType __instance, ref string ____headerTip)
         {
             if (Manager.Instance.TryGetFavWorkType(__instance.def.workType, out FavWorkType cfg)
-                && cfg.resetTooltipCache)
+                && cfg.ResetTooltipCache)
             {
                 ____headerTip = String.Empty;
-                cfg.resetTooltipCache = false;
+                cfg.ResetTooltipCache = false;
             }
         }
     }
@@ -37,22 +37,18 @@ namespace FavPriorities
         }
         public FavWorkType(WorkTypeDef workTypeDef) : this()
         {
-            this.workTypeDef = workTypeDef;
-            this._workTypeName = workTypeDef.defName;
+            WorkTypeDef = workTypeDef;
+            _workTypeName = workTypeDef.defName;
         }
 
         /// <summary>
         /// Indicate need reset tooltips cache in PawnColumnWorker_WorkType:GetHeaderTip
         /// </summary>
-        public bool resetTooltipCache = true;
+        public bool ResetTooltipCache = true;
             
-        public WorkTypeDef workTypeDef;
+        public WorkTypeDef WorkTypeDef;
 
-        private bool _classChanged = true;
-
-        public bool IsChanged => _classChanged;
-
-        public void SubmitChanges() => _classChanged = false;
+        public bool IsChanged { get; private set; } = true;
 
         private string _workTypeName;
 
@@ -62,15 +58,10 @@ namespace FavPriorities
             set
             {
                 if (!_workTypeName.Equals(value))
-                    _classChanged = true;
+                    IsChanged = true;
 
                 _workTypeName = value;
             }
-        }
-
-        private void RenameWorkTypeDef()
-        {
-            workTypeDef.labelShort = workTypeDef.gerundLabel = workTypeDef.pawnLabel = workTypeDef.verb = _workTypeName;
         }
 
         private HashSet<WorkGiverDef> _works = new HashSet<WorkGiverDef>();
@@ -79,41 +70,41 @@ namespace FavPriorities
 
         public void AddWorkGiver(WorkGiverDef workGiver)
         {
-            _classChanged = true;
+            IsChanged = true;
             _works.Add(workGiver);
         }
 
         public void RemoveWorkGiver(WorkGiverDef workGiver)
         {
-            _classChanged = true;
+            IsChanged = true;
             _works.Remove(workGiver);
         }
 
         public void ClearWorkGivers()
         {
-            _classChanged = true;
+            IsChanged = true;
             _works.Clear();
         }
 
         public void ExposeData()
         {
             Scribe_Values.Look(ref _workTypeName, "workTypeName");
-            Scribe_Defs.Look(ref workTypeDef, "workTypeDef");
+            Scribe_Defs.Look(ref WorkTypeDef, "workTypeDef");
             Scribe_Collections.Look(ref _works, "works", LookMode.Def);
         }
 
-        public void ApplyChanges(Dictionary<WorkTypeDef, List<WorkGiverDef>> workgiversByType, List<PawnColumnDef> allColumns)
+        public void InsertNewWork(Dictionary<WorkTypeDef, List<WorkGiverDef>> workgiversByType, List<PawnColumnDef> allColumns)
         {
-            if (workgiversByType.ContainsKey(workTypeDef))
+            if (workgiversByType.ContainsKey(WorkTypeDef))
             {
-                Log.Error($"[FavPriorities] Can't apply changes. workTypeDef exist in dictionary!");
+                Log.Error($"[FavWorks] Can't apply changes. workTypeDef exist in dictionary!");
                 return;
             }
 
-            var pawnColumnDef = FavWorkExtension.GetFavWorkColumnDef(workTypeDef);
+            var pawnColumnDef = FavWorkExtension.GetFavWorkColumnDef(WorkTypeDef);
             if (pawnColumnDef == null)
             {
-                Log.Error($"[FavPriorities] Can't apply changes. PawnColumnDef = null");
+                Log.Error($"[FavWorks] Can't apply changes. PawnColumnDef = null");
                 return;
             }
 
@@ -129,13 +120,13 @@ namespace FavPriorities
                 // insert before WorkTab Favourite column
                 int insertPosition = allColumns.Count - 3;
                 allColumns.Insert(insertPosition, pawnColumnDef);
-                this.RenameWorkTypeDef();
+                WorkTypeDef.labelShort = WorkTypeDef.gerundLabel = WorkTypeDef.pawnLabel = WorkTypeDef.verb = _workTypeName;
             }
 
-            workTypeDef.workGiversByPriority = _works.ToList();
-            workgiversByType.Add(workTypeDef, workTypeDef.workGiversByPriority.ToList());
-            resetTooltipCache = true;
-            _classChanged = false;
+            WorkTypeDef.workGiversByPriority = _works.ToList();
+            workgiversByType.Add(WorkTypeDef, WorkTypeDef.workGiversByPriority.ToList());
+            ResetTooltipCache = true;
+            IsChanged = false;
         }
     }
 }
