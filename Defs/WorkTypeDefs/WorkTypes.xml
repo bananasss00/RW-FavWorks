@@ -4,76 +4,51 @@
 	<WorkTypeDef>
 		<defName>FavWork1</defName>
 		<labelShort>FavWork1</labelShort>
-		<pawnLabel>FavPriorityPawn</pawnLabel>
-		<gerundLabel>FavWork</gerundLabel>
-		<description>DESCRIPTION</description>
-		<verb>FavPriorityVerb</verb>
+		<pawnLabel>FavWork1</pawnLabel>
+		<gerundLabel>FavWork1</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork1</verb>
 		<naturalPriority>0</naturalPriority>
-		<alwaysStartActive>true</alwaysStartActive>
-		<workTags>
-			<!-- <li>ManualDumb</li> -->
-			<!-- <li>Hauling</li> -->
-		</workTags>
 	</WorkTypeDef>
 
 	<WorkTypeDef>
 		<defName>FavWork2</defName>
 		<labelShort>FavWork2</labelShort>
-		<pawnLabel>FavPriorityPawn</pawnLabel>
-		<gerundLabel>FavWork</gerundLabel>
-		<description>DESCRIPTION</description>
-		<verb>FavPriorityVerb</verb>
+		<pawnLabel>FavWork2</pawnLabel>
+		<gerundLabel>FavWork2</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork2</verb>
 		<naturalPriority>0</naturalPriority>
-		<alwaysStartActive>true</alwaysStartActive>
-		<workTags>
-			<!-- <li>ManualDumb</li> -->
-			<!-- <li>Hauling</li> -->
-		</workTags>
 	</WorkTypeDef>
 
 	<WorkTypeDef>
 		<defName>FavWork3</defName>
 		<labelShort>FavWork3</labelShort>
-		<pawnLabel>FavPriorityPawn</pawnLabel>
-		<gerundLabel>FavWork</gerundLabel>
-		<description>DESCRIPTION</description>
-		<verb>FavPriorityVerb</verb>
+		<pawnLabel>FavWork3</pawnLabel>
+		<gerundLabel>FavWork3</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork3</verb>
 		<naturalPriority>0</naturalPriority>
-		<alwaysStartActive>true</alwaysStartActive>
-		<workTags>
-			<!-- <li>ManualDumb</li> -->
-			<!-- <li>Hauling</li> -->
-		</workTags>
 	</WorkTypeDef>
 
 	<WorkTypeDef>
 		<defName>FavWork4</defName>
 		<labelShort>FavWork4</labelShort>
-		<pawnLabel>FavPriorityPawn</pawnLabel>
-		<gerundLabel>FavWork</gerundLabel>
-		<description>DESCRIPTION</description>
-		<verb>FavPriorityVerb</verb>
+		<pawnLabel>FavWork4</pawnLabel>
+		<gerundLabel>FavWork4</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork4</verb>
 		<naturalPriority>0</naturalPriority>
-		<alwaysStartActive>true</alwaysStartActive>
-		<workTags>
-			<!-- <li>ManualDumb</li> -->
-			<!-- <li>Hauling</li> -->
-		</workTags>
 	</WorkTypeDef>
 
 	<WorkTypeDef>
 		<defName>FavWork5</defName>
 		<labelShort>FavWork5</labelShort>
-		<pawnLabel>FavPriorityPawn</pawnLabel>
-		<gerundLabel>FavWork</gerundLabel>
-		<description>DESCRIPTION</description>
-		<verb>FavPriorityVerb</verb>
+		<pawnLabel>FavWork5</pawnLabel>
+		<gerundLabel>FavWork5</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork5</verb>
 		<naturalPriority>0</naturalPriority>
-		<alwaysStartActive>true</alwaysStartActive>
-		<workTags>
-			<!-- <li>ManualDumb</li> -->
-			<!-- <li>Hauling</li> -->
-		</workTags>
 	</WorkTypeDef>
 
 </Defs>

@@ -62,6 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manager.cs" />
+    <Compile Include="FavWorkType.cs" />
+    <Compile Include="FavWorkExtension.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
