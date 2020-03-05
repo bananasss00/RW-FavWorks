@@ -2,8 +2,8 @@
 <Defs>
 
 	<WorkTypeDef>
-		<defName>FavPriority1</defName>
-		<labelShort>FavWork</labelShort>
+		<defName>FavWork1</defName>
+		<labelShort>FavWork1</labelShort>
 		<pawnLabel>FavPriorityPawn</pawnLabel>
 		<gerundLabel>FavWork</gerundLabel>
 		<description>DESCRIPTION</description>
@@ -17,15 +17,14 @@
 	</WorkTypeDef>
 
 	<WorkTypeDef>
-		<defName>FavPriority2</defName>
-		<labelShort>FavWork</labelShort>
+		<defName>FavWork2</defName>
+		<labelShort>FavWork2</labelShort>
 		<pawnLabel>FavPriorityPawn</pawnLabel>
 		<gerundLabel>FavWork</gerundLabel>
 		<description>DESCRIPTION</description>
 		<verb>FavPriorityVerb</verb>
 		<naturalPriority>0</naturalPriority>
 		<alwaysStartActive>true</alwaysStartActive>
-		<visible>false</visible>
 		<workTags>
 			<!-- <li>ManualDumb</li> -->
 			<!-- <li>Hauling</li> -->
@@ -33,15 +32,14 @@
 	</WorkTypeDef>
 
 	<WorkTypeDef>
-		<defName>FavPriority3</defName>
-		<labelShort>FavWork</labelShort>
+		<defName>FavWork3</defName>
+		<labelShort>FavWork3</labelShort>
 		<pawnLabel>FavPriorityPawn</pawnLabel>
 		<gerundLabel>FavWork</gerundLabel>
 		<description>DESCRIPTION</description>
 		<verb>FavPriorityVerb</verb>
 		<naturalPriority>0</naturalPriority>
 		<alwaysStartActive>true</alwaysStartActive>
-		<visible>false</visible>
 		<workTags>
 			<!-- <li>ManualDumb</li> -->
 			<!-- <li>Hauling</li> -->
@@ -49,15 +47,14 @@
 	</WorkTypeDef>
 
 	<WorkTypeDef>
-		<defName>FavPriority4</defName>
-		<labelShort>FavWork</labelShort>
+		<defName>FavWork4</defName>
+		<labelShort>FavWork4</labelShort>
 		<pawnLabel>FavPriorityPawn</pawnLabel>
 		<gerundLabel>FavWork</gerundLabel>
 		<description>DESCRIPTION</description>
 		<verb>FavPriorityVerb</verb>
 		<naturalPriority>0</naturalPriority>
 		<alwaysStartActive>true</alwaysStartActive>
-		<visible>false</visible>
 		<workTags>
 			<!-- <li>ManualDumb</li> -->
 			<!-- <li>Hauling</li> -->
@@ -65,15 +62,14 @@
 	</WorkTypeDef>
 
 	<WorkTypeDef>
-		<defName>FavPriority5</defName>
-		<labelShort>FavWork</labelShort>
+		<defName>FavWork5</defName>
+		<labelShort>FavWork5</labelShort>
 		<pawnLabel>FavPriorityPawn</pawnLabel>
 		<gerundLabel>FavWork</gerundLabel>
 		<description>DESCRIPTION</description>
 		<verb>FavPriorityVerb</verb>
 		<naturalPriority>0</naturalPriority>
 		<alwaysStartActive>true</alwaysStartActive>
-		<visible>false</visible>
 		<workTags>
 			<!-- <li>ManualDumb</li> -->
 			<!-- <li>Hauling</li> -->

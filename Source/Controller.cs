@@ -20,49 +20,145 @@ namespace FavPriorities
 
         public override void DefsLoaded()
         {
-            HarmonyInstance.Create("rimworld.harmony.FavPriorities").PatchAll(Assembly.GetExecutingAssembly());
+            FavWorkTypeDefs = DefDatabase<WorkTypeDef>.AllDefs
+                .Where(x => x.defName.StartsWith("FavWork"))
+                .ToDictionary(x => x.defName, y => new FavWorkCfg(y));
 
-            FavDef1 = DefDatabase<WorkTypeDef>.AllDefs.FirstOrDefault(x => x.defName == "FavPriority1");
-            FavDef2 = DefDatabase<WorkTypeDef>.AllDefs.FirstOrDefault(x => x.defName == "FavPriority2");
-            FavDef3 = DefDatabase<WorkTypeDef>.AllDefs.FirstOrDefault(x => x.defName == "FavPriority3");
+            if (FavWorkTypeDefs.Count == 0)
+            {
+                Log.Error("[FavPriorities] Can't find any FavWork WorkTypeDef's");
+                return;
+            }
 
-            AllWorkTypes = DefDatabase<WorkTypeDef>.AllDefs
-                .Where(x => !x.defName.StartsWith("FavPriority"))
+            AllModPawnColumnDef = DefDatabase<PawnColumnDef>.AllDefs
+                .Where(x => x.workerClass == typeof(PawnColumnWorker_WorkType)
+                            && x.defName.StartsWith("WorkPriority_FavWork"))
                 .ToList();
 
+            if (AllModPawnColumnDef.Count == 0)
+            {
+                Log.Error("[FavPriorities] Can't find any FavWork PawnColumnDef's");
+                return;
+            }
+            if (AllModPawnColumnDef.Count != FavWorkTypeDefs.Count)
+            {
+                Log.Error("[FavPriorities] PawnColumnDef's != WorkTypeDef's");
+                return;
+            }
+
+            AllWorkTypes = DefDatabase<WorkTypeDef>.AllDefs
+                .Where(x => !x.defName.StartsWith("FavWork"))
+                .ToList();
+
+            ApplyWorks();
+
+            HarmonyInstance.Create("rimworld.harmony.FavPriorities").PatchAll(Assembly.GetExecutingAssembly());
             Log.Message($"FavPrioritiesMod :: Initialized");
         }
 
         public static void ApplyWorks()
         {
-            FavDef1.workGiversByPriority = FavWorks.ToList();
-
             var workgiversByType = (Dictionary<WorkTypeDef, List<WorkGiverDef>>)WorkgiversByTypeField.GetValue(null);
-            if (!workgiversByType.TryGetValue(FavDef1, out List<WorkGiverDef> result)){}
-            workgiversByType[FavDef1] = new List<WorkGiverDef>(FavDef1.workGiversByPriority);
 
+            // clean olds
+            workgiversByType.RemoveAll(x => x.Key.defName.StartsWith("FavWork"));
+
+            foreach (var kv in FavWorkTypeDefs)
+            {
+                var favWorkType = kv.Value.favWorkType;
+                var favWorkCfg = kv.Value;
+                favWorkType.workGiversByPriority = favWorkCfg.FavWorks.ToList();
+
+                HideEmptyColumns(favWorkType, favWorkCfg);
+                workgiversByType.Add(favWorkType, new List<WorkGiverDef>(favWorkType.workGiversByPriority));
+                favWorkCfg.needUpdate = true; 
+            }
+
+            FixExpandedColumns();
             ResetTooltipCaches();
             ResetPawns();
         }
 
-        public static void ResetTooltipCaches()
+        private static void FixExpandedColumns()
+        {
+            foreach (var pawnColumnDef in WorkTab.Controller.allColumns.Where(x => x.defName.StartsWith("WorkPriority_FavWork")))
+            {
+                var expandable = pawnColumnDef.Worker as IExpandableColumn;
+                if (expandable != null && expandable.Expanded && FavWorkTypeDefs[pawnColumnDef.workType.defName].FavWorks.Count < 2)
+                {
+                    expandable.Expanded = false;
+                }
+            }
+        }
+
+        // change GetHashCode for WorkTypeDef! workTypeDef.labelShort = workTypeDef.gerundLabel = workTypeDef.pawnLabel = cfg.name;
+        private static void HideEmptyColumns(WorkTypeDef workTypeDef, FavWorkCfg cfg)
+        {
+            if (cfg.FavWorks.Count == 0)
+            {
+                WorkTab.Controller.allColumns.RemoveAll(x => x.defName.Equals("WorkPriority_" + workTypeDef.defName));
+            }
+            else if (!WorkTab.Controller.allColumns.Exists(x => x.defName.Equals("WorkPriority_" + workTypeDef.defName)))
+            {
+                var pawnColumn = AllModPawnColumnDef.FirstOrDefault(x => x.defName.Equals("WorkPriority_" + workTypeDef.defName));
+                if (pawnColumn != null)
+                {
+                    // insert before WorkTab Favourite column
+                    var position = WorkTab.Controller.allColumns.Count - 3;
+                    WorkTab.Controller.allColumns.Insert(position, pawnColumn);
+                    workTypeDef.labelShort = workTypeDef.gerundLabel = workTypeDef.pawnLabel = cfg.name;
+                }
+            }
+        }
+
+        private static void ResetTooltipCaches()
         {
             if (WorkListCacheField == null)
                 throw new Exception("workListCache == null");
 
             ((Dictionary<WorkTypeDef, string>)WorkListCacheField.GetValue(null)).Clear();
-            PawnColumnWorker_WorkType_GetHeaderTip.NeedResetCache = true;
         }
 
-        public static void ResetPawns()
+        private static void ResetPawns()
         {
-            foreach (Pawn pawn in Find.CurrentMap.mapPawns.FreeColonists)
-                pawn.workSettings.Notify_UseWorkPrioritiesChanged();
+            var maps = Find.Maps;
+            if (maps == null)
+                return;
+
+            foreach (var map in maps)
+            {
+                map.mapPawns?.FreeColonists?.ToList().ForEach(x => x.workSettings.Notify_UseWorkPrioritiesChanged());
+            }
         }
 
+        public class FavWorkCfg : IExposable
+        {
+            public FavWorkCfg()
+            {
+                
+            }
+            public FavWorkCfg(WorkTypeDef wotkType)
+            {
+                favWorkType = wotkType;
+            }
+
+            public WorkTypeDef favWorkType;
+            public HashSet<WorkGiverDef> FavWorks = new HashSet<WorkGiverDef>();
+            public string name = "FavWorks";
+            public bool needUpdate = true;
+
+            public void ExposeData()
+            {
+                Scribe_Values.Look(ref name, "name");
+                Scribe_Defs.Look(ref favWorkType, "favWorkType");
+                Scribe_Collections.Look(ref FavWorks, "FavWorks", LookMode.Def);
+            }
+        }
+
+        public static List<PawnColumnDef> AllModPawnColumnDef;
         public static List<WorkTypeDef> AllWorkTypes = new List<WorkTypeDef>();
-        public static HashSet<WorkGiverDef> FavWorks = new HashSet<WorkGiverDef>();
-        public static WorkTypeDef FavDef1, FavDef2, FavDef3;
+        public static Dictionary<string, FavWorkCfg> FavWorkTypeDefs;
+        // worktab fields
         private static readonly FieldInfo WorkListCacheField = AccessTools.Field(typeof(WorkType_Extensions), "workListCache");
         private static readonly FieldInfo WorkgiversByTypeField = AccessTools.Field(typeof(WorkType_Extensions), "_workgiversByType");
     }
@@ -70,15 +166,14 @@ namespace FavPriorities
     [HarmonyPatch(typeof(PawnColumnWorker_WorkType), "GetHeaderTip")]
     public static class PawnColumnWorker_WorkType_GetHeaderTip
     {
-        public static bool NeedResetCache { get; set; } = true;
-
         [HarmonyPrefix]
         public static void GetHeaderTip(PawnColumnWorker_WorkType __instance, ref string ____headerTip)
         {
-            if (NeedResetCache && __instance.def.defName == "WorkPriority_FavPriority1")
+            if (Controller.FavWorkTypeDefs.TryGetValue(__instance.def.workType.defName, out Controller.FavWorkCfg cfg)
+                && cfg.needUpdate)
             {
                 ____headerTip = "";
-                NeedResetCache = false;
+                cfg.needUpdate = false;
             }
         }
     }
