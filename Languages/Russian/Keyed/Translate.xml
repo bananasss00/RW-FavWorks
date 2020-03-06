@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	
+	<UI.SelectGroup>Выбрать группу</UI.SelectGroup>
+	<UI.GroupName>   имя группы</UI.GroupName>
+	<UI.QuickSearch>   быстрый поиск</UI.QuickSearch>
+	<UI.ShowActiveWorks>Показать только активные</UI.ShowActiveWorks>
+	<UI.ClearGivers>Отключить всё</UI.ClearGivers>
+
+</LanguageData>

@@ -17,7 +17,7 @@ namespace FavWorks
         [HarmonyPrefix]
         public static void GetHeaderTip(PawnColumnWorker_WorkType __instance, ref string ____headerTip)
         {
-            if (Manager.Instance.TryGetFavWorkType(__instance.def.workType, out FavWorkType cfg)
+            if (Manager.Instance.TryGetFavWorkType(__instance.def.workType, out var cfg)
                 && cfg.ResetTooltipCache)
             {
                 ____headerTip = String.Empty;
@@ -27,7 +27,7 @@ namespace FavWorks
     }
 
     /// <summary>
-    /// Include activated works and store class changes
+    /// Dynamic WorkTypeDef and track class changes
     /// </summary>
     public class FavWorkType : IExposable
     {

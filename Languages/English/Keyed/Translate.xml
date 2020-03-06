@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	
+	<UI.SelectGroup>Select Group</UI.SelectGroup>
+	<UI.GroupName>   group name</UI.GroupName>
+	<UI.QuickSearch>   quick search</UI.QuickSearch>
+	<UI.ShowActiveWorks>Show active works</UI.ShowActiveWorks>
+	<UI.ClearGivers>Disable all</UI.ClearGivers>
+
+</LanguageData>

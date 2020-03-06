@@ -16,6 +16,7 @@ namespace FavWorks
 
         private string _searchString = String.Empty;
         private float  _curY = 0f;
+        private bool _showActiveWorks = false;
 
         public override Vector2 InitialSize => new Vector2(640f, 480f);
 
@@ -49,7 +50,7 @@ namespace FavWorks
 
             _curY = 0f;
             var favsRect = new Rect(0, _curY, 200, ElementHeight);
-            if (Widgets.ButtonText(favsRect, _currentFavWork == null ? "Select FavWork Group" : Manager.Instance.GetFavWorkName(_currentFavWork)))
+            if (Widgets.ButtonText(favsRect, _currentFavWork == null ? "UI.SelectGroup".Translate() : Manager.Instance.GetFavWorkName(_currentFavWork)))
             {
                 Find.WindowStack.Add(new FloatMenu(GenFavWorkOptions().ToList()));
             }
@@ -59,6 +60,10 @@ namespace FavWorks
                 // fav work name
                 var nameRect = new Rect(favsRect.xMax + 10, _curY, 200, ElementHeight);
                 cfg.WorkTypeName = Widgets.TextField(nameRect, cfg.WorkTypeName);
+                if (String.IsNullOrEmpty(cfg.WorkTypeName))
+                {
+                    Widgets.Label(nameRect, "UI.GroupName".Translate());
+                }
                 _curY = nameRect.yMax + 5;
 
                 DrawFavWork(cfg, rect.width, rect.height);
@@ -77,10 +82,18 @@ namespace FavWorks
             // fast search box
             var searchRect = new Rect(0, _curY, 200, ElementHeight);
             _searchString = Widgets.TextField(searchRect, _searchString);
+            if (String.IsNullOrEmpty(_searchString))
+            {
+                Widgets.Label(searchRect, "UI.QuickSearch".Translate());
+            }
+
+            // show active works
+            var showActiveRect = new Rect(searchRect.xMax + 10, _curY, 200, ElementHeight);
+            Widgets.CheckboxLabeled(showActiveRect, "UI.ShowActiveWorks".Translate(), ref _showActiveWorks);
 
             // clear favor works
-            var clearRect = new Rect(searchRect.xMax + 10, _curY, 200, ElementHeight);
-            if (Widgets.ButtonText(clearRect, "Clear work givers"))
+            var clearRect = new Rect(showActiveRect.xMax + 10, _curY, 150, ElementHeight);
+            if (Widgets.ButtonText(clearRect, "UI.ClearGivers".Translate()))
             {
                 cfg.ClearWorkGivers();
             }
@@ -91,19 +104,22 @@ namespace FavWorks
             _curY += 5;
 
             Rect outRect = new Rect(x: 0f, y: _curY, width: width, height: height - _curY);
-            if (String.IsNullOrEmpty(_searchString))
+            if (_showActiveWorks)
             {
-                int linesCount = _allWorkTypes.Count +
-                                 _allWorkTypes.Sum(workType => workType.workGiversByPriority.Count);
+                var givers = _allWorkTypes
+                    .SelectMany(workType => workType.workGiversByPriority)
+                    .Where(giver => giver.label != null && cfg.ContainsWorkGiver(giver))
+                    .ToList();
 
-                Widgets.BeginScrollView(outRect: outRect, scrollPosition: ref _scrollPosition, 
-                    viewRect: new Rect(x: 0f, y: _curY, width: width - 30f, height: linesCount * ElementHeight));
+                Widgets.BeginScrollView(outRect: outRect, scrollPosition: ref _scrollPosition,
+                    viewRect: new Rect(x: 0f, y: _curY, width: width - 30f, height: givers.Count * ElementHeight));
 
-                DrawWorkTypes(cfg, width - 30f);
+                DrawWorkGivers(cfg, givers, width - 30f);
 
                 Widgets.EndScrollView();
             }
-            else
+
+            else if (!String.IsNullOrEmpty(_searchString))
             {
                 string lowSearchString = _searchString.ToLower();
                 var givers = _allWorkTypes
@@ -111,12 +127,23 @@ namespace FavWorks
                     .Where(giver => giver.label?.ToLower().Contains(lowSearchString) ?? false)
                     .ToList();
 
-                int linesCount = givers.Count;
+                Widgets.BeginScrollView(outRect: outRect, scrollPosition: ref _scrollPosition,
+                    viewRect: new Rect(x: 0f, y: _curY, width: width - 30f, height: givers.Count * ElementHeight));
+
+                DrawWorkGivers(cfg, givers, width - 30f);
+
+                Widgets.EndScrollView();
+            }
+
+            else
+            {
+                int linesCount = _allWorkTypes.Count +
+                                 _allWorkTypes.Sum(workType => workType.workGiversByPriority.Count);
 
                 Widgets.BeginScrollView(outRect: outRect, scrollPosition: ref _scrollPosition,
                     viewRect: new Rect(x: 0f, y: _curY, width: width - 30f, height: linesCount * ElementHeight));
 
-                DrawWorkGivers(cfg, givers, width - 30f);
+                DrawWorkTypes(cfg, width - 30f);
 
                 Widgets.EndScrollView();
             }

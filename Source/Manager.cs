@@ -12,7 +12,7 @@ namespace FavWorks
     [DefOf]
     public static class FavPrioritiesDefOf
     {
-        public static KeyBindingDef FavPrioritiesWindowOpen;
+        public static KeyBindingDef FavWorksOpenWindow;
     }
 
     public class Manager : GameComponent
@@ -38,7 +38,7 @@ namespace FavWorks
 
         public override void GameComponentOnGUI()
         {
-            if (FavPrioritiesDefOf.FavPrioritiesWindowOpen != null && FavPrioritiesDefOf.FavPrioritiesWindowOpen.IsDownEvent)
+            if (FavPrioritiesDefOf.FavWorksOpenWindow != null && FavPrioritiesDefOf.FavWorksOpenWindow.IsDownEvent)
             {
                 if (Find.WindowStack.Windows.Count(window => window is Window) <= 0)
                 {

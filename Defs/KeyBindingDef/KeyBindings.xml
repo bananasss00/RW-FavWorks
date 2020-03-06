@@ -2,8 +2,8 @@
 
 <Defs>
 	<KeyBindingDef>
-		<defName>FavPrioritiesWindowOpen</defName>
-		<label>Open FavPriorities window</label>
+		<defName>FavWorksOpenWindow</defName>
+		<label>Open FavWorks window</label>
 		<category>Game</category>
 		<defaultKeyCodeA>B</defaultKeyCodeA>
 	</KeyBindingDef>
