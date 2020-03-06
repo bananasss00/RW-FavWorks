@@ -39,6 +39,7 @@ namespace FavWorks
         {
             WorkTypeDef = workTypeDef;
             _workTypeName = workTypeDef.defName;
+            WorkTypeDef.description = String.Empty;
         }
 
         /// <summary>
