@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FavWorkAdd_MapClick_Patch.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="FavWorkType.cs" />
     <Compile Include="FavWorkExtension.cs" />

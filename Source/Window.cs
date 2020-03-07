@@ -11,8 +11,8 @@ namespace FavWorks
         private const float ElementHeight = 30f;
 
         private static List<WorkTypeDef> _allWorkTypes;
-        private static WorkTypeDef _currentFavWork;
         private static Vector2 _scrollPosition;
+        public static WorkTypeDef CurrentFavWork;
 
         private string _searchString = String.Empty;
         private float  _curY = 0f;
@@ -32,7 +32,7 @@ namespace FavWorks
         {
             foreach (var favWorkType in Manager.Instance.GetAllFavWorkTypes())
             {
-                yield return new FloatMenuOption(favWorkType.WorkTypeName, () => _currentFavWork = favWorkType.WorkTypeDef);
+                yield return new FloatMenuOption(favWorkType.WorkTypeName, () => CurrentFavWork = favWorkType.WorkTypeDef);
             }
         }
         
@@ -50,12 +50,12 @@ namespace FavWorks
 
             _curY = 0f;
             var favsRect = new Rect(0, _curY, 200, ElementHeight);
-            if (Widgets.ButtonText(favsRect, _currentFavWork == null ? "UI.SelectGroup".Translate() : Manager.Instance.GetFavWorkName(_currentFavWork)))
+            if (Widgets.ButtonText(favsRect, CurrentFavWork == null ? "UI.SelectGroup".Translate() : Manager.Instance.GetFavWorkName(CurrentFavWork)))
             {
                 Find.WindowStack.Add(new FloatMenu(GenFavWorkOptions().ToList()));
             }
 
-            if (_currentFavWork != null && Manager.Instance.TryGetFavWorkType(_currentFavWork, out FavWorkType cfg))
+            if (CurrentFavWork != null && Manager.Instance.TryGetFavWorkType(CurrentFavWork, out FavWorkType cfg))
             {
                 // fav work name
                 var nameRect = new Rect(favsRect.xMax + 10, _curY, 200, ElementHeight);

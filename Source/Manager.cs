@@ -13,6 +13,7 @@ namespace FavWorks
     public static class FavPrioritiesDefOf
     {
         public static KeyBindingDef FavWorksOpenWindow;
+        public static KeyBindingDef FavWorksThingWorkGivers;
     }
 
     public class Manager : GameComponent
@@ -88,6 +89,12 @@ namespace FavWorks
 
         public bool TryGetFavWorkType(WorkTypeDef def, out FavWorkType favWorkType)
         {
+            if (def == null)
+            {
+                favWorkType = null;
+                return false;
+            }
+
             return _favWorkTypeDefs.TryGetValue(def.defName, out favWorkType);
         }
 

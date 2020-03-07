@@ -6,5 +6,6 @@
 	<UI.QuickSearch>   быстрый поиск</UI.QuickSearch>
 	<UI.ShowActiveWorks>Показать только активные</UI.ShowActiveWorks>
 	<UI.ClearGivers>Отключить всё</UI.ClearGivers>
+	<UI.CurrentFavWorkNotSelected>Не выбрана группа</UI.CurrentFavWorkNotSelected>
 
 </LanguageData>

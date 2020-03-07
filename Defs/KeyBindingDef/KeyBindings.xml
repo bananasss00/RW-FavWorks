@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <Defs>
+
 	<KeyBindingDef>
 		<defName>FavWorksOpenWindow</defName>
 		<label>Open FavWorks window</label>
 		<category>Game</category>
 		<defaultKeyCodeA>B</defaultKeyCodeA>
 	</KeyBindingDef>
+	
+	<KeyBindingDef>
+		<defName>FavWorksThingWorkGivers</defName>
+		<label>Open Thing WorkGivers</label>
+		<category>Game</category>
+		<defaultKeyCodeA>N</defaultKeyCodeA>
+	</KeyBindingDef>
+	
 </Defs>

@@ -6,5 +6,6 @@
 	<UI.QuickSearch>   quick search</UI.QuickSearch>
 	<UI.ShowActiveWorks>Show active works</UI.ShowActiveWorks>
 	<UI.ClearGivers>Disable all</UI.ClearGivers>
+	<UI.CurrentFavWorkNotSelected>Group not selected</UI.CurrentFavWorkNotSelected>
 
 </LanguageData>
