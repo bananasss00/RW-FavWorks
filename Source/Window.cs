@@ -50,7 +50,7 @@ namespace FavWorks
 
             _curY = 0f;
             var favsRect = new Rect(0, _curY, 200, ElementHeight);
-            if (Widgets.ButtonText(favsRect, CurrentFavWork == null ? "UI.SelectGroup".Translate() : Manager.Instance.GetFavWorkName(CurrentFavWork)))
+            if (Widgets.ButtonText(favsRect, CurrentFavWork == null ? "UI.SelectGroup".Translate().ToString() : Manager.Instance.GetFavWorkName(CurrentFavWork)))
             {
                 Find.WindowStack.Add(new FloatMenu(GenFavWorkOptions().ToList()));
             }

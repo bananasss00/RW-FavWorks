@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Harmony;
+using HarmonyLib;
 using Verse;
 
 namespace FavWorks
@@ -8,7 +8,7 @@ namespace FavWorks
     {
         public Controller(ModContentPack mod) : base(mod)
         {
-            HarmonyInstance.Create("PirateBY.FavWorks").PatchAll(Assembly.GetExecutingAssembly());
+            new Harmony("PirateBY.FavWorks").PatchAll(Assembly.GetExecutingAssembly());
             Log.Message($"FavWorks :: Initialized");
         }
     }
