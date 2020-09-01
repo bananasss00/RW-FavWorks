@@ -16,6 +16,23 @@ namespace FavWorks
         public static KeyBindingDef FavWorksThingWorkGivers;
     }
 
+    /// <summary>
+    /// Update columns if WorkTab opened
+    /// </summary>
+    [HarmonyPatch(typeof(MainTabWindow_WorkTab), "DoWindowContents")]
+    public static class MainTabWindow_WorkTab_DoWindowContents
+    {
+        [HarmonyPrefix]
+        public static void DoWindowContents(ref bool ____columnsChanged)
+        {
+            if (Manager.Instance.ColumnsUpdated)
+            {
+                ____columnsChanged = true;
+                Manager.Instance.ColumnsUpdated = false;
+            }
+        }
+    }
+
     public class Manager : GameComponent
     {
         public Manager()
@@ -30,6 +47,8 @@ namespace FavWorks
             {
                 Log.Error("[FavWorks] Can't find any FavWork WorkTypeDef's");
             }
+
+            this.ApplyWorks();
         }
 
         public Manager(Game game) : this()
@@ -129,10 +148,13 @@ namespace FavWorks
                         .ForEach(x => x.workSettings.Notify_UseWorkPrioritiesChanged());
                 }
             }
+
+            ColumnsUpdated = true;
         }
 
         public Game game;
         public static Manager Instance;
+        public bool ColumnsUpdated { get; set; }
         private Dictionary<string, FavWorkType> _favWorkTypeDefs;
 
         // WorkTab Fields
