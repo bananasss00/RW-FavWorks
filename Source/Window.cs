@@ -8,6 +8,9 @@ namespace FavWorks
 {
     public class Window : Verse.Window
     {
+        private static Window _dialog;
+        public static Window Dialog => _dialog ?? (_dialog = new Window());
+
         private const float ElementHeight = 30f;
 
         private static List<WorkTypeDef> _allWorkTypes;

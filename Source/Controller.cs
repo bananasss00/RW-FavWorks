@@ -8,7 +8,7 @@ namespace FavWorks
     {
         public Controller(ModContentPack mod) : base(mod)
         {
-            new Harmony("PirateBY.FavWorks").PatchAll(Assembly.GetExecutingAssembly());
+            new Harmony("PirateBY.FavWorks").PatchAll();
             Log.Message($"FavWorks :: Initialized");
         }
     }

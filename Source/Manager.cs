@@ -60,9 +60,10 @@ namespace FavWorks
         {
             if (FavPrioritiesDefOf.FavWorksOpenWindow != null && FavPrioritiesDefOf.FavWorksOpenWindow.IsDownEvent)
             {
-                if (Find.WindowStack.Windows.Count(window => window is Window) <= 0)
+                var window = Window.Dialog;
+                if (!window.IsOpen)
                 {
-                    Find.WindowStack.Add(new Window());
+                    Find.WindowStack.Add(window);
                 }
             }
         }
