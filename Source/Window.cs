@@ -8,20 +8,20 @@ namespace FavWorks
 {
     public class Window : Verse.Window
     {
-        private static Window _dialog;
-        public static Window Dialog => _dialog ?? (_dialog = new Window());
+        private static Window? _dialog;
+        public static Window Dialog => _dialog ??= new Window();
 
         private const float ElementHeight = 30f;
 
-        private static List<WorkTypeDef> _allWorkTypes;
+        private static List<WorkTypeDef>? _allWorkTypes;
         private static Vector2 _scrollPosition;
-        public static WorkTypeDef CurrentFavWork;
+        public static WorkTypeDef? CurrentFavWork;
 
         private string _searchString = String.Empty;
         private float  _curY = 0f;
         private bool _showActiveWorks = false;
 
-        public override Vector2 InitialSize => new Vector2(640f, 480f);
+        public override Vector2 InitialSize => new(640f, 480f);
 
         public Window()
         {
@@ -41,12 +41,7 @@ namespace FavWorks
         
         public override void DoWindowContents(Rect rect)
         {
-            if (_allWorkTypes == null)
-            {
-                _allWorkTypes = DefDatabase<WorkTypeDef>.AllDefs
-                    .Where(workTypeDef => !workTypeDef.IsFavWorkDef())
-                    .ToList();
-            }
+            _allWorkTypes ??= InitWorkTypes();
 
             Text.Font = GameFont.Small;
             GUI.BeginGroup(rect);
@@ -80,6 +75,13 @@ namespace FavWorks
             GUI.EndGroup();
         }
 
+        private static List<WorkTypeDef> InitWorkTypes()
+        {
+            return DefDatabase<WorkTypeDef>.AllDefs
+                .Where(workTypeDef => !workTypeDef.IsFavWorkDef())
+                .ToList();
+        }
+
         public void DrawFavWork(FavWorkType cfg, float width, float height)
         {
             // fast search box
@@ -106,7 +108,7 @@ namespace FavWorks
             Widgets.DrawLineHorizontal(0, _curY, width);
             _curY += 5;
 
-            Rect outRect = new Rect(x: 0f, y: _curY, width: width, height: height - _curY);
+            Rect outRect = new(x: 0f, y: _curY, width: width, height: height - _curY);
             if (_showActiveWorks)
             {
                 var givers = _allWorkTypes

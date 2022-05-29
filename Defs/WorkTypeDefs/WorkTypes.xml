@@ -51,4 +51,54 @@
 		<naturalPriority>0</naturalPriority>
 	</WorkTypeDef>
 
+	<WorkTypeDef>
+		<defName>FavWork6</defName>
+		<labelShort>FavWork6</labelShort>
+		<pawnLabel>FavWork6</pawnLabel>
+		<gerundLabel>FavWork6</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork6</verb>
+		<naturalPriority>0</naturalPriority>
+	</WorkTypeDef>
+
+	<WorkTypeDef>
+		<defName>FavWork7</defName>
+		<labelShort>FavWork7</labelShort>
+		<pawnLabel>FavWork7</pawnLabel>
+		<gerundLabel>FavWork7</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork7</verb>
+		<naturalPriority>0</naturalPriority>
+	</WorkTypeDef>
+
+	<WorkTypeDef>
+		<defName>FavWork8</defName>
+		<labelShort>FavWork8</labelShort>
+		<pawnLabel>FavWork8</pawnLabel>
+		<gerundLabel>FavWork8</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork8</verb>
+		<naturalPriority>0</naturalPriority>
+	</WorkTypeDef>
+
+	<WorkTypeDef>
+		<defName>FavWork9</defName>
+		<labelShort>FavWork9</labelShort>
+		<pawnLabel>FavWork9</pawnLabel>
+		<gerundLabel>FavWork9</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork9</verb>
+		<naturalPriority>0</naturalPriority>
+	</WorkTypeDef>
+
+	<WorkTypeDef>
+		<defName>FavWork10</defName>
+		<labelShort>FavWork10</labelShort>
+		<pawnLabel>FavWork10</pawnLabel>
+		<gerundLabel>FavWork10</gerundLabel>
+		<description>FavPriorities</description>
+		<verb>FavWork10</verb>
+		<naturalPriority>0</naturalPriority>
+	</WorkTypeDef>
+
 </Defs>

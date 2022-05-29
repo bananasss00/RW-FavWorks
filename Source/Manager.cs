@@ -12,29 +12,22 @@ namespace FavWorks
     [DefOf]
     public static class FavPrioritiesDefOf
     {
-        public static KeyBindingDef FavWorksOpenWindow;
-        public static KeyBindingDef FavWorksThingWorkGivers;
-    }
-
-    /// <summary>
-    /// Update columns if WorkTab opened
-    /// </summary>
-    [HarmonyPatch(typeof(MainTabWindow_WorkTab), "DoWindowContents")]
-    public static class MainTabWindow_WorkTab_DoWindowContents
-    {
-        [HarmonyPrefix]
-        public static void DoWindowContents(ref bool ____columnsChanged)
-        {
-            if (Manager.Instance.ColumnsUpdated)
-            {
-                ____columnsChanged = true;
-                Manager.Instance.ColumnsUpdated = false;
-            }
-        }
+        public static KeyBindingDef? FavWorksOpenWindow;
+        public static KeyBindingDef? FavWorksThingWorkGivers;
     }
 
     public class Manager : GameComponent
     {
+        public Game game = null!;
+        public static Manager Instance = null!;
+        public bool ColumnsUpdated { get; set; }
+        private Dictionary<string, FavWorkType> _favWorkTypeDefs;
+
+        // WorkTab Fields
+        private static readonly FieldInfo WorkListCacheField = AccessTools.Field(typeof(WorkType_Extensions), "workListCache");
+        private static readonly FieldInfo WorkgiversByTypeField = AccessTools.Field(typeof(WorkType_Extensions), "_workgiversByType");
+
+
         public Manager()
         {
             Instance = this;
@@ -111,7 +104,7 @@ namespace FavWorks
         {
             if (def == null)
             {
-                favWorkType = null;
+                favWorkType = null!;
                 return false;
             }
 
@@ -152,14 +145,5 @@ namespace FavWorks
 
             ColumnsUpdated = true;
         }
-
-        public Game game;
-        public static Manager Instance;
-        public bool ColumnsUpdated { get; set; }
-        private Dictionary<string, FavWorkType> _favWorkTypeDefs;
-
-        // WorkTab Fields
-        private static readonly FieldInfo WorkListCacheField = AccessTools.Field(typeof(WorkType_Extensions), "workListCache");
-        private static readonly FieldInfo WorkgiversByTypeField = AccessTools.Field(typeof(WorkType_Extensions), "_workgiversByType");
     }
 }

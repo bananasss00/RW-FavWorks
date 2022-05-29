@@ -5,8 +5,11 @@ using System.Reflection;
 using HarmonyLib;
 using Verse;
 
-namespace FavWorks
+namespace FavWorks.Patches.AutoPriorities
 {
+    /// <summary>
+    /// Remove FavWork worktypes from this mod
+    /// </summary>
     [HarmonyPatch]
     public class AutoPrioritiesSupport_Patch
     {

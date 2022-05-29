@@ -5,12 +5,11 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace FavWorks
+namespace FavWorks.Patches.Vanilla
 {
-    [HarmonyPatch(typeof(Selector))]
-    [HarmonyPatch("HandleMapClicks")]
+    [HarmonyPatch(typeof(Selector), nameof(Selector.HandleMapClicks))]
     [HarmonyPriority(99999)]
-    class FavWorkAdd_MapClick_Patch
+    class Selector_HandleMapClicks_Patch
     {
         [HarmonyPrefix]
         static bool HandleMapClicks()

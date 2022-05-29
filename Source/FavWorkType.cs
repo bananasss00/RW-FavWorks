@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HarmonyLib;
 using RimWorld;
 using Verse;
 using WorkTab;
@@ -9,37 +8,23 @@ using WorkTab;
 namespace FavWorks
 {
     /// <summary>
-    /// Reset tooltips patch
-    /// </summary>
-    [HarmonyPatch(typeof(PawnColumnWorker_WorkType), "GetHeaderTip")]
-    public static class PawnColumnWorker_WorkType_GetHeaderTip
-    {
-        [HarmonyPrefix]
-        public static void GetHeaderTip(PawnColumnWorker_WorkType __instance, ref string ____headerTip)
-        {
-            if (Manager.Instance.TryGetFavWorkType(__instance.def.workType, out var cfg)
-                && cfg.ResetTooltipCache)
-            {
-                ____headerTip = String.Empty;
-                cfg.ResetTooltipCache = false;
-            }
-        }
-    }
-
-    /// <summary>
     /// Dynamic WorkTypeDef and track class changes
     /// </summary>
     public class FavWorkType : IExposable
     {
+        /// <summary>
+        /// Used for exposing data
+        /// </summary>
         public FavWorkType()
         {
             
         }
+
         public FavWorkType(WorkTypeDef workTypeDef) : this()
         {
             WorkTypeDef = workTypeDef;
             _workTypeName = workTypeDef.defName;
-            WorkTypeDef.description = String.Empty;
+            WorkTypeDef.description = string.Empty;
         }
 
         /// <summary>
@@ -51,7 +36,7 @@ namespace FavWorks
 
         public bool IsChanged { get; private set; } = true;
 
-        private string _workTypeName;
+        private string _workTypeName = "undefined";
 
         public string WorkTypeName
         {
@@ -65,7 +50,7 @@ namespace FavWorks
             }
         }
 
-        private HashSet<WorkGiverDef> _works = new HashSet<WorkGiverDef>();
+        private HashSet<WorkGiverDef> _works = new();
 
         public bool ContainsWorkGiver(WorkGiverDef workGiver) => _works.Contains(workGiver);
 
@@ -89,7 +74,7 @@ namespace FavWorks
 
         public void ExposeData()
         {
-            Scribe_Values.Look(ref _workTypeName, "workTypeName");
+            Scribe_Values.Look(ref _workTypeName!, "workTypeName");
             Scribe_Defs.Look(ref WorkTypeDef, "workTypeDef");
             Scribe_Collections.Look(ref _works, "works", LookMode.Def);
         }
@@ -102,7 +87,7 @@ namespace FavWorks
                 return;
             }
 
-            var pawnColumnDef = FavWorkExtension.GetFavWorkColumnDef(WorkTypeDef);
+            var pawnColumnDef = WorkTypeDef.GetFavWorkColumnDef();
             if (pawnColumnDef == null)
             {
                 Log.Error($"[FavWorks] Can't apply changes. PawnColumnDef = null");
